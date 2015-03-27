@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js kss-html" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  <title>KSS: Living Styleguide</title>
+  <meta name="description" content="">
+  <meta name="generator" content="kss-node" />
+
+  <meta name="viewport" content="width=device-width">
+
+  <link href='http://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="public/kss.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
+  <link rel="stylesheet" href="../css/app.css">
+</head>
+<body class="kss-body">
+<div class="kss">
+    <div class="kss-cutoff"></div>
+    <div class="kss-inner">
+        <div class="kss-header">
+            The Great One
+        </div>
+        <div class="kss-content-container cf">
+            <nav>
+                <ul class="kss-nav">
+                    <li class="kss-nav__item"><a href="index.html" class="kss-nav__link kss-index">CSS Guidelines</a></li>
+                    {{#eachRoot}}
+                    <li class="kss-nav__item"><a href="section-{{reference}}.html" class="kss-nav__link kss-section-{{reference}}">{{reference}}.0: {{header}}</a></li>
+                  {{/eachRoot}}
+                </ul>
+            </nav>
+            <div class="kss-content cf">
+                <div class="kss-column-fix">
+                 {{#if overview}}
+                    {{html overview}}
+                  {{else}}
+                    {{#eachSection rootNumber}}
+                      {{#whenDepth 1}}
+                        <h1 class="kss-title kss-h1"><span class="kss-ref">{{ reference }}.0</span> - {{ header }}</h1>
+                      {{else}}
+                       <section class="kss-depth-{{ refDepth }}">
+                        <h1 class="kss-title kss-h1"><span class="kss-ref">{{ reference }}</span> - {{ header }}</h1>
+                      {{/whenDepth}}
+                        {{#ifAny markup modifiers}}
+                            <div class="kss-box">{{html description}}</div>
+                            <div class="kss-mod-list kss-island kss-mb20 cf">
+                              <div class="kss-mod-desc-group">
+                                <p class="kss-description-heading">Default styling</p>
+                              </div>
+                              <div class="kss-mod-example kss-mb20">
+                                {{modifierMarkup}}
+                              </div>
+                            {{#eachModifier}}
+                              <div class="kss-mod-desc-group">
+                                <div class="kss-mod-desc kss-description-heading">{{html description}}</div>
+                                <div class="kss-mod-name">{{name}}</div>
+                              </div>
+                              <div class="kss-mod-example">
+                                <div>{{modifierMarkup}}</div>
+                              </div>
+                            {{/eachModifier}}
+                            </div>
+                            <div class="kss-markup kss-island">
+                              <pre class="kss-pre"><code class="lang-html">{{markup}}</code></pre>
+                            </div>
+                        {{else}}
+                            {{#if description}}
+                              {{html description}}
+                            {{/if}}
+                        {{/ifAny}}
+                      {{#whenDepth 1}} {{else}}
+                        </section>
+                      {{/whenDepth}}
+                    {{/eachSection}}
+                  {{/if}}
+
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+<footer class="kss-footer">
+    Stephen Sulik &#169; 2015
+</footer>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script>
+$(document).ready(function(){
+  $(window).on('scroll', function() {
+        if($(window).scrollTop() > 80) {
+            $('body').addClass('kss--scrolled');
+        } else {
+            $('body').removeClass('kss--scrolled');
+        }
+    });
+
+  function setActiveLink() {
+    var windowLocation = window.location.href,
+        currentPage = windowLocation.substr(windowLocation.lastIndexOf('/') + 1),
+        fileExtension = currentPage.indexOf('.html'),
+        selector = '.kss-' + currentPage.substr(0, fileExtension);
+        console.log(selector)
+        $($(selector)[0]).addClass('kss-nav__link--active');
+    }
+
+    setActiveLink();
+    $('body').addClass('kss-loaded');
+});
+</script>
+</body>
+</html>

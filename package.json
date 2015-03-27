@@ -1,0 +1,8 @@
+{
+  "name": "kss-template",
+  "version": "0.1.0",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-kss": "^0.4.0"
+  }
+}
